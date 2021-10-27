@@ -1,0 +1,23 @@
+.imagen {
+    height: 45px;
+    width: 45px;
+}
+
+.form {
+    margin: 0px 20%;
+}
+
+.texto {
+    margin: 0px 20%;
+}
+
+#card2, #card3, #card4, #card5, #card6, #card7 {
+    font-style: italic;
+}
+
+#card3, #card4, #card5, #card6, #card7 {
+    border-top: 1px solid grey;
+}
+
+
+
