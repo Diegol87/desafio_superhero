@@ -13,29 +13,61 @@ $(document).ready(function() {
     if(resultado === true) {
         exito();
     }
-
+//prueba
     function exito() {    
 
         let numero1 = parseInt(document.querySelector("#numeros").value);
         let resultado = numero1;
+        let dataPoints = [];
+        let opciones = {
+            title: {
+                text: "Estadística de habilidades "
+            },
+            data: [{
+                    type: "pie",
+                    startAngle: 45,
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} ({y})",
+                    yValueFormatString:"#,##0.#"%"",
+                    dataPoints: dataPoints,
+        },
+    ],
+    }
+    //prueba y gráfico
 
         $.ajax({
             type: "GET",
             url:"https://superheroapi.com/api.php/921606152096118/" + resultado,
             dataType:"json",
-            success: function(datosHero) {
+            success: function(data) {
 
-                $(".card-title").text("Nombre: " + datosHero.name);
-                $("#card1").text("Conexiones: " + datosHero.connections["group-affiliation"]);
-                $("#card2").text("Publicado por: " + datosHero.biography.publisher);
-                $("#card3").text("Ocupación: " + datosHero.work.occupation);
-                $("#card4").text("Primera aparición: " + datosHero.biography["first-appearance"]);
-                $("#card5").text("Altura: " + datosHero.appearance.height);
-                $("#card6").text("Peso: " + datosHero.appearance.weight);
-                $("#card7").text("Alianzas: " + datosHero.biography.aliases);
-                $(".img-fluid").attr("src", datosHero.image.url);
+                $(".card-title").text("Nombre: " + data.name);
+                $("#card1").text("Conexiones: " + data.connections["group-affiliation"]);
+                $("#card2").text("Publicado por: " + data.biography.publisher);
+                $("#card3").text("Ocupación: " + data.work.occupation);
+                $("#card4").text("Primera aparición: " + data.biography["first-appearance"]);
+                $("#card5").text("Altura: " + data.appearance.height);
+                $("#card6").text("Peso: " + data.appearance.weight);
+                $("#card7").text("Alianzas: " + data.biography.aliases);
+                $(".img-fluid").attr("src", data.image.url);
+
+                let datosApi = [data.powerstats.combat, data.powerstats.durability, data.powerstats.intelligence, data.powerstats.power, data.powerstats.speed, data.powerstats.strength];
+
+                let datosLabel = ["Combat", "Durability", "Intelligence", "Power", "Speed", "Strength"]
+                
+                for(let i = 0; i < datosApi.length ; i++) {
+                    dataPoints.push({
+                    y: datosApi[i],
+                    label: datosLabel[i]
+                    });
+            }
+
+            $("#chartContainer").CanvasJSChart(opciones);
+            
+        },
             },
-        }); 
+        ); 
     }   
     });
 });
@@ -72,52 +104,6 @@ $(document).ready(function() {
         return pasamosLaValidacion
     }
 
-   //Gráfico
+  
 
-    $(".btn").click(function() {
-
-        let numero2 = parseInt(document.querySelector("#numeros").value);
-        let resultado1 = numero2;
-
-        let dataPoints = [];
-        let opciones = {
-            title: {
-                text: "Estadística de habilidades "
-            },
-            data: [{
-                    type: "pie",
-                    startAngle: 45,
-                    showInLegend: "true",
-                    legendText: "{label}",
-                    indexLabel: "{label} ({y})",
-                    yValueFormatString:"#,##0.#"%"",
-                    dataPoints: dataPoints,
-        },
-    ],
-    }
-
-        $.ajax({
-            type: "GET",
-            url:"https://superheroapi.com/api.php/921606152096118/" + resultado1,
-            dataType:"json",
-            success: function(data) {
-                let datosApi = [data.powerstats.combat, data.powerstats.durability, data.powerstats.intelligence, data.powerstats.power, data.powerstats.speed, data.powerstats.strength];
-
-                let datosLabel = ["Combat", "Durability", "Intelligence", "Power", "Speed", "Strength"]
-                
-                for(let i = 0; i < datosApi.length ; i++) {
-                    dataPoints.push({
-                    y: datosApi[i],
-                    label: datosLabel[i]
-                    });
-            }
-
-            $("#chartContainer").CanvasJSChart(opciones);
-            
-        },
-        error: function(error) {
-            console.log(error);
-          },
-        });
-    });
     
