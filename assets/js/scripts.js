@@ -21,7 +21,7 @@ $(document).ready(function() {
         let dataPoints = [];
         let opciones = {
             title: {
-                text: "Estadística de habilidades "
+                text: "Estadística de habilidades"
             },
             data: [{
                     type: "pie",
@@ -42,15 +42,16 @@ $(document).ready(function() {
             dataType:"json",
             success: function(data) {
 
-                $(".card-title").text("Nombre: " + data.name);
-                $("#card1").text("Conexiones: " + data.connections["group-affiliation"]);
-                $("#card2").text("Publicado por: " + data.biography.publisher);
-                $("#card3").text("Ocupación: " + data.work.occupation);
-                $("#card4").text("Primera aparición: " + data.biography["first-appearance"]);
-                $("#card5").text("Altura: " + data.appearance.height);
-                $("#card6").text("Peso: " + data.appearance.weight);
-                $("#card7").text("Alianzas: " + data.biography.aliases);
+                $(".card-title").text(`Nombre: ${data.name}`);
+                $("#card1").text(`Conexiones: ${data.connections["group-affiliation"]}`);
+                $("#card2").text(`Publicado po: ${data.biography.publisher}`);
+                $("#card3").text(`Ocupación: ${data.work.occupation}`);
+                $("#card4").text(`Primera aparaición: ${data.biography["first-appearance"]}`);
+                $("#card5").text(`Altura: ${data.appearance.height}`);
+                $("#card6").text(`Peso: ${data.appearance.weight}`);
+                $("#card7").text(`Alianzas: ${data.biography.aliases}`);
                 $(".img-fluid").attr("src", data.image.url);
+                
 
                 let datosApi = [data.powerstats.combat, data.powerstats.durability, data.powerstats.intelligence, data.powerstats.power, data.powerstats.speed, data.powerstats.strength];
 
